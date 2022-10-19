@@ -10,7 +10,7 @@ How to Install?
   Windows:
     ```Run install.bat```
   
-  linux:
+  Linux:
     ```chmod +x install.sh && ./install.sh```
    
-  Now you can run ```python/3 main.py --help```
+  Now you can run ```python main.py --help``` for Windows or ```python3 main.py --help``` for Linux
