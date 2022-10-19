@@ -7,6 +7,8 @@ This tool will automate web crawling with Shodan API Searches, Directory Brute F
 
 How to Install?
 
+First head to https://shodan.io and put your Shodan API key in line - of main.py
+
   Windows:
     ```install.bat```
   
