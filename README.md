@@ -6,6 +6,7 @@ This tool will automate web crawling with Shodan API Searches, Directory Brute F
 
 
 How to Install?
+
   Windows:
     ```Run install.bat```
   
