@@ -22,7 +22,7 @@ Windows:
   
       python main.py
   
-  
+\n\n
   
 Linux:
   Clone the Repo
