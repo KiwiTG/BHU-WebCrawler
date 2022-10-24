@@ -21,12 +21,9 @@ Windows:
   Run the Script
   
       python main.py
-  
-  
-  
-  
-  
-  
+
+or
+
 Linux:
   Clone the Repo
   
