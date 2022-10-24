@@ -12,6 +12,7 @@ First head to https://shodan.io and put your Shodan API key in line 4 of main.py
 ___________________________________________________________________________________________________________________________________________________________
 
 Windows:
+
   Clone the Repo or Download the ZIP
   
       git clone https://github.com/KiwiTG/BHU-WebCrawler.git
@@ -28,6 +29,7 @@ ________________________________________________________________________________
 
 
 Linux:
+
   Clone the Repo
   
       git clone https://github.com/KiwiTG/BHU-WebCrawler.git
