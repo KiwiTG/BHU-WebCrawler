@@ -9,6 +9,8 @@ How to Install?
 
 First head to https://shodan.io and put your Shodan API key in line 4 of main.py and keep the ''
 
+___________________________________________________________________________________________________________________________________________________________
+
 Windows:
   Clone the Repo or Download the ZIP
   
@@ -22,7 +24,8 @@ Windows:
   
       python main.py
 
-or
+___________________________________________________________________________________________________________________________________________________________
+
 
 Linux:
   Clone the Repo
