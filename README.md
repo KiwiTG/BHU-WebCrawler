@@ -19,11 +19,7 @@ Windows:
     
   Install the Requirements
   
-      run the install.bat
-    
-  Run the Script
-  
-      python main.py
+      pip install -r requirements.txt
 
 ___________________________________________________________________________________________________________________________________________________________
 
@@ -40,6 +36,6 @@ Linux:
     
   Install the Requirements
   
-      chmod +x install.sh && ./install.sh
+      pip install -r requirements,txt
    
   Now you can run ```python main.py --help``` for Windows or ```python3 main.py --help``` for Linux
