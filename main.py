@@ -1,7 +1,7 @@
 import requests, os, argparse, colorama, shodan, socket, urllib.request, threading, concurrent.futures
 from colorama import Fore
 
-SHODAN_API_KEY = ''
+SHODAN_API_KEY = 'API-KEY-HERE'
 api = shodan.Shodan(SHODAN_API_KEY)
 
 parser = argparse.ArgumentParser(description='BHU Web Crawler')
