@@ -1,7 +1,14 @@
-import requests, os, argparse, colorama, shodan, socket, urllib.request
+########################################################
+########################################################
+##########     Author: H4Z3#6991              ##########
+##########     Port Scanner: sysgerm#8669     ##########
+########################################################
+########################################################
+
+import requests, os, argparse, colorama, shodan, socket, urllib.request, threading, concurrent.futures
 from colorama import Fore
 
-SHODAN_API_KEY = 'SHODAN API KEY HERE'
+SHODAN_API_KEY = 'AaeWA2DtLpJM4H0ktOXui6IkoTElZjoE'
 api = shodan.Shodan(SHODAN_API_KEY)
 
 parser = argparse.ArgumentParser(description='BHU Web Crawler')
@@ -11,10 +18,22 @@ parser.add_argument('-pa', '--print-all', action='store_true', help='Print Valid
 parser.add_argument('-v', '--verbosity', action='store_true', help='Enable Verbosity')
 parser.add_argument('-s', '--shodan', action='store_true', help='Run Shodan Search')
 parser.add_argument('-ip', action='store_true', help='Get Websites IP')
+parser.add_argument('-ps', '--port-scan', action='store_true', help='Automatically Scan the Website for Open Ports')
 parser.add_argument('-o', '--output', metavar='FILENAME', help='Output File')
 args = parser.parse_args()
 
 wdl = args.wordlist
+
+def scan(ip, port):
+	scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	scanner.settimeout(1)
+	try:
+		scanner.connect((ip, port))
+		scanner.close()
+		with print_lock:
+			print(f'...	[{Fore.GREEN}+{Fore.RESET}] Open Port > {port}')
+	except:
+		passocusing
 
 if args.output:
 	print(f'\n[{Fore.BLUE}+{Fore.RESET}] Directory Results will be Written to {args.output}')
@@ -73,18 +92,26 @@ if args.shodan:
 if args.ip:
 	print(f'\n[{Fore.GREEN}+{Fore.RESET}] Website IP: {socket.gethostbyname(url.replace("https://", ""))}')
 
-if args.wordlist:
-	req = requests.get('https://' + url + '/robots.txt')
-	if req.status_code == 200:
-		if args.verbosity:
-			print(f'\n[{Fore.GREEN}+{Fore.RESET}] robots.txt Found > https://{url}/robots.txt | Status Code {req.status_code}')
-		else:
-			print(f'\n[{Fore.GREEN}+{Fore.RESET}] robots.txt Found > https://{url}/robots.txt')
+if args.port_scan:
+	print(f'\n[{Fore.YELLOW}*{Fore.RESET}] Scanning all Ports Agianst {url}')
+	print_lock = threading.Lock()
+	ip = socket.gethostbyname(url.replace("https://", ""))
+	with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+		for port in range (1000):
+			executor.submit(scan, ip, port + 1)
+	print(f'[{Fore.YELLOW}*{Fore.RESET}] All 1000 Ports Scanned!')
+
+req = requests.get('https://' + url + '/robots.txt')
+if req.status_code == 200:
+	if args.verbosity:
+		print(f'\n[{Fore.GREEN}+{Fore.RESET}] robots.txt Found > https://{url}/robots.txt | Status Code {req.status_code}')
 	else:
-		if args.verbosity:
-			print(f'\n[{Fore.RED}-{Fore.RESET}] No robots.txt Found | Status Code {req.status_code}')
-		else:
-			print(f'\n[{Fore.RED}-{Fore.RESET}] No robots.txt Found')
+		print(f'\n[{Fore.GREEN}+{Fore.RESET}] robots.txt Found > https://{url}/robots.txt')
+else:
+	if args.verbosity:
+		print(f'\n[{Fore.RED}-{Fore.RESET}] No robots.txt Found | Status Code {req.status_code}')
+	else:
+		print(f'\n[{Fore.RED}-{Fore.RESET}] No robots.txt Found')
 			
 if args.wordlist:
 	with open(f'{wdl}', 'r') as fp:
@@ -93,7 +120,10 @@ if args.wordlist:
 			
 	print(f'\n[{Fore.YELLOW}*{Fore.RESET}] Wordlist Length > {count + 1}\n')
 	
-	print(f'[{Fore.MAGENTA}*{Fore.RESET}] If This Attack Fails Try www.{url}\n')
+	if 'www.' in url:
+		print(f'[{Fore.MAGENTA}*{Fore.RESET}] If This Attack Fails Try https://{url.replace("www.", "")}\n')
+	else:
+		print(f'[{Fore.MAGENTA}*{Fore.RESET}] If This Attack Fails Try www.{url}\n')
 
 	while True:
 		printline = 1
@@ -120,6 +150,7 @@ if args.wordlist:
 								if args.output:
 									foutbf.write(f'[+] {linel} is Valid | https://{url}/{linel}\n')
 					except:
+						r = urllib.request.urlopen('https://' + url + '/' + linel).getcode()
 						if args.print_all:
 								if args.verbosity:
 									print(f'[{Fore.RED}-{Fore.RESET}] \033[1m{linel}\033[0m is Invalid | Status Code \033[1m{r}\033[0m | https://{url}/{linel}')
@@ -131,4 +162,5 @@ if args.wordlist:
 										foutbf.write(f'[-] {linel} is Invalid | https://{url}/{linel}\n')
 						else:
 							pass
+					
 					printline += 1
