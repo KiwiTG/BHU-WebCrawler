@@ -2,6 +2,8 @@
 
 This Project is still in progress!
 
+Directory Brute Forcer is very buggy, will be fixed soon!
+
 This tool will automate web crawling with Shodan API Searches, Directory Brute Forcer, and more information on the chosen website.
 
 
