@@ -89,7 +89,7 @@ if args.port_scan:
 	print(f'\n[{Fore.YELLOW}*{Fore.RESET}] Scanning all Ports Agianst {url}')
 	lock = threading.Lock()
 	host = socket.gethostbyname(url.replace("https://", ""))
-	with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+	with concurrent.futures.ThreadPoolExecutor(max_workers=1000) as executor:
 		for port in range (65535):
 			executor.submit(scan, host, port + 1)
 	print(f'[{Fore.YELLOW}*{Fore.RESET}] All 1000 Ports Scanned!')
