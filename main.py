@@ -17,13 +17,13 @@ args = parser.parse_args()
 
 wdl = args.wordlist
 
-def scan(ip, port):
-	scanner = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	scanner.settimeout(1)
+def scan(host, port):
+	pscan = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	pscan.settimeout(1)
 	try:
-		scanner.connect((ip, port))
-		scanner.close()
-		with print_lock:
+		pscan.connect((host, port))
+		pscan.close()
+		with lock:
 			print(f'...	[{Fore.GREEN}+{Fore.RESET}] Open Port > {port}')
 	except:
 		passocusing
@@ -87,11 +87,11 @@ if args.ip:
 
 if args.port_scan:
 	print(f'\n[{Fore.YELLOW}*{Fore.RESET}] Scanning all Ports Agianst {url}')
-	print_lock = threading.Lock()
-	ip = socket.gethostbyname(url.replace("https://", ""))
+	lock = threading.Lock()
+	host = socket.gethostbyname(url.replace("https://", ""))
 	with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-		for port in range (1000):
-			executor.submit(scan, ip, port + 1)
+		for port in range (65535):
+			executor.submit(scan, host, port + 1)
 	print(f'[{Fore.YELLOW}*{Fore.RESET}] All 1000 Ports Scanned!')
 
 req = requests.get('https://' + url + '/robots.txt')
