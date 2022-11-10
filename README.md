@@ -1,5 +1,7 @@
 # BHU-WebCrawler
 
+![](https://github-readme-stats.vercel.app/api?username=KiwiTG&show_icons=true&count_private=true)
+
 This Project is still in progress!
 
 Directory Brute Forcer is very buggy, will be fixed soon!
